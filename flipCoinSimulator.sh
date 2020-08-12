@@ -2,12 +2,10 @@
 
 echo "Welcome to Flip coin simulator"
 
-read -p "Enter number of times you want to flip the coin: " count
-
 tailNum=0
 headNum=0
 
-for ((i=0; i<$count; i++))
+while [ true ]
 do
 	face="$((RANDOM%2))"
 
@@ -17,7 +15,22 @@ do
 	else
 		headNum=$(($headNum+1))
 	fi
+	
+	
+	if [[ $tailNum -eq 21 || $headNum -eq 21 ]]
+	then
+		break
+	fi
 done
 
-echo "Tails showed up ${tailNum}"
-echo "Heads showed up ${headNum}"
+if [[ $tailNum -eq 21 && $headNum -eq 21  ]]
+then
+	echo "It was a tie"
+elif [[ $tailNum -ge $headNum ]]
+then
+	diff=$(( $tailNum - $headNum ))
+	echo "Tails won by $diff"
+else
+	diff=$(( $headNum - $tailNum ))
+	echo "Heads won by $diff"
+fi
